@@ -1,0 +1,77 @@
+# --------------------------
+# Anyon Systems zshrc
+# Author: Ruben van Staden
+# Email: ruben@anyonsys.com
+# --------------------------
+
+export ZSH="$HOME/.oh-my-zsh"
+
+plugins=(
+    z
+    git
+    poetry
+    docker
+    docker-compose
+    zsh-autosuggestions
+    history-substring-search
+)
+
+source $ZSH/oh-my-zsh.sh
+
+export EDITOR=/usr/bin/nvim
+
+# -- Extend PATH
+
+path+="$HOME/.poetry/bin"
+path+="$HOME/.local/bin"
+
+# -- Aliases
+
+alias t3="tree -L 3 ."
+alias t4="tree -L 4 ."
+alias reload="source ~/.zshrc"
+alias shutdown="shutdown -h now"
+alias myip="curl http://ipecho.net/plain; echo"
+
+# -- Configs
+# ZSH
+fpath+=~/.zfunc
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+# Pure
+fpath+=$HOME/.zsh/pure
+autoload -U promptinit; promptinit
+prompt pure
+
+# -- Public Variables
+
+export DOCKER_BUILDKIT=1
+export PYTHONDONTWRITEBYTECODE=1
+export CONAN_REVISIONS_ENABLED=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# -- Private Variables
+
+export INSTALL_PATH="/opt/packages"
+export PY_ENV="$HOME/.config/py-env"
+
+alias activate='test -d $PY_ENV && source $PY_ENV/bin/activate || echo "No Virtualenv in the current folder"'
+alias mkenv='test -d $PY_ENV && echo "Already exists" || python3 -m venv $PY_ENV; activate'
+
+# -- Anyon Variables
+# DevOps
+export ANYON_EMAIL=ruben@anyonsys.com
+export GITLAB_DOCKER_TOKEN=1StzL8KWdXsEjoxq2GtZ
+export JFROG_TOKEN=AKCp8jQcqPJi9hGuQE5u48imjBp5CziGCMiEqdA8FqFVDGuEqreXv9csAHGtVXnTFNsqG4iRa
+# MPICH 
+export MPICH_VERSION="3.3.2"
+export MPICH_PATH="$INSTALL_PATH/mpich/$MPICH_VERSION"
+export PATH="$PATH:$MPICH_PATH/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$MPICH_PATH/lib/"
+# MKL
+export MKL_VERSION="2020.4.304"
+export MKL_PATH="$INSTALL_PATH/mkl/$MKL_VERSION"
+export MKLROOT="$MKL_PATH/compilers_and_libraries_$MKL_VERSION/linux/mkl"
+# Benchmark
+export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
+export PETSC_DIR="$HOME/packages/anyon/petsc"
+export PETSC_ARCH="arch-linux-c-debug"
