@@ -1,79 +1,65 @@
-# --------------------------
-# Ruben van Staden
-# --------------------------
+# ~/.zshrc
 
-export ZSH="$HOME/.oh-my-zsh"
+# Plugins
+fpath+="$HOME/.zsh/pure"
+fpath+="$HOME/.zsh/zsh-completions"
 
-# -- Plugins
-plugins=(
-    z
-    git
-    poetry
-    docker
-    docker-compose
-    zsh-autosuggestions
-    history-substring-search
-)
+. "$HOME/.zsh/z/z.sh"
 
-source $ZSH/oh-my-zsh.sh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-# -- Extend PATH
-path+="$HOME/.poetry/bin"
-path+="$HOME/.local/bin"
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
-# -- Aliases
+zmodload zsh/complist
+
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+autoload -U promptinit; promptinit
+prompt pure
+
+# optionally define some options
+PURE_CMD_MAX_EXEC_TIME=10
+
+# change the path color
+zstyle :prompt:pure:path color white
+
+# change the color for both `prompt:success` and `prompt:error`
+zstyle ':prompt:pure:prompt:*' color cyan
+
+# turn on git stash status
+zstyle :prompt:pure:git:stash show yes
+
+prompt pure
+
+bindkey -v
+export KEYTIMEOUT=1
+
+# autoload -Uz edit-command-line
+# zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
+
+# -- Aliases general
+alias rm="rm -rf"
+alias -g G='| grep -i'
+alias ls='ls --color=tty'
+alias reload="source ~/.zshrc"
+alias shutdown="shutdown -h now"
+alias myip="curl http://ipecho.net/plain; echo"
+alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+
+# -- Aliases navigation
 alias t1="tree -L 1 ."
 alias t2="tree -L 2 ."
 alias t3="tree -L 3 ."
 alias t4="tree -L 4 ."
+
+# -- Aliases configuration
 alias dz="nvim ~/.zshrc"
 alias di="nvim ~/.config/i3/config"
 alias dn="cd ~/.config/nvim && nvim"
 alias da="nvim ~/.config/alacritty/alacritty.yml"
-alias rm="rm -rf"
-alias reload="source ~/.zshrc"
-alias shutdown="shutdown -h now"
-alias myip="curl http://ipecho.net/plain; echo"
-
-# -- Configs
-# ZSH
-fpath+=~/.zfunc
-fpath+=${ZDOTDIR:-~}/.zsh_functions
-# Pure
-fpath+=$HOME/.zsh/pure
-autoload -U promptinit; promptinit
-prompt pure
-
-# -- Packages
-export INSTALL_PATH="/opt/packages"
-
-# -- Public Variables
-export DOCKER_BUILDKIT=1
-export PYTHONDONTWRITEBYTECODE=1
-export CONAN_REVISIONS_ENABLED=1
-export COMPOSE_DOCKER_CLI_BUILD=1
-
-# -- Private Variables
-export EDITOR=/usr/bin/nvim
-export PRIVATE_ENV="$HOME/.config/private"
-alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
-alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
-
-# -- Anyon Variables
-# DevOps
-export ANYON_EMAIL=ruben@anyonsys.com
-export GITLAB_DOCKER_TOKEN=1StzL8KWdXsEjoxq2GtZ
-export JFROG_TOKEN=AKCp8jQcqPJi9hGuQE5u48imjBp5CziGCMiEqdA8FqFVDGuEqreXv9csAHGtVXnTFNsqG4iRa
-# MPICH 
-export MPICH_VERSION="3.3.2"
-export MPICH_PATH="$INSTALL_PATH/mpich/$MPICH_VERSION"
-export PATH="$PATH:$MPICH_PATH/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$MPICH_PATH/lib/"
-# MKL
-export MKL_VERSION="2020.4.304"
-export MKL_PATH="$INSTALL_PATH/mkl/$MKL_VERSION"
-export MKLROOT="$MKL_PATH/compilers_and_libraries_$MKL_VERSION/linux/mkl"
-# Benchmark
-export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
-export PETSC_DIR="$HOME/packages/anyon/petsc"
-export PETSC_ARCH="arch-linux-c-debug"
