@@ -66,10 +66,9 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 
 # -- Change directory
 alias ~="cd ~"
-alias .="cd .."
-alias ..="cd ../.."
-alias ...="cd ../../.."
-alias ....="cd ../../../.."
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
 cursor_mode() {
     cursor_block='\e[2 q'
