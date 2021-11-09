@@ -45,12 +45,12 @@ export KEYTIMEOUT=1
 
 # -- Aliases general
 alias rm="rm -rf"
-alias -g G='| grep -i'
-alias ls='ls --color=tty'
-alias reload="source ~/.zshrc"
+alias la="ls -al"
+alias ls="ls --color=tty"
 alias shutdown="shutdown -h now"
+alias reload="source $HOME/.config/zsh/.zshrc"
 alias myip="curl http://ipecho.net/plain; echo"
-alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 
 # -- Aliases navigation
 alias t1="tree -L 1 ."
@@ -59,10 +59,10 @@ alias t3="tree -L 3 ."
 alias t4="tree -L 4 ."
 
 # -- Aliases configuration
-alias dz="nvim ~/.zshrc"
-alias di="nvim ~/.config/i3/config"
-alias dn="cd ~/.config/nvim && nvim"
-alias da="nvim ~/.config/alacritty/alacritty.yml"
+alias di="nvim $HOME/.config/i3/config"
+alias dz="nvim $HOME/.config/zsh/.zshrc"
+alias dn="cd $HOME/.config/nvim && nvim"
+alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 
 # -- Change directory
 alias ~="cd ~"
@@ -72,24 +72,23 @@ alias ...="cd ../../.."
 alias ....="cd ../../../.."
 
 cursor_mode() {
-    # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
     cursor_block='\e[2 q'
     cursor_beam='\e[6 q'
 
     function zle-keymap-select {
-        if [[ ${KEYMAP} == vicmd ]] ||
-            [[ $1 = 'block' ]]; then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] ||
-            [[ ${KEYMAP} == viins ]] ||
-            [[ ${KEYMAP} = '' ]] ||
-            [[ $1 = 'beam' ]]; then
-            echo -ne $cursor_beam
-        fi
+      if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+        echo -ne $cursor_block
+      elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+        echo -ne $cursor_beam
+      fi
     }
 
     zle-line-init() {
-        echo -ne $cursor_beam
+      echo -ne $cursor_beam
     }
 
     zle -N zle-keymap-select
