@@ -1,6 +1,5 @@
 FROM alpine:edge
 
-# Install dependencies
 RUN apk update \
   && apk add \
     curl \
@@ -10,6 +9,7 @@ RUN apk update \
     --update
 
 RUN mkdir -p "$HOME/.zsh"
+
 RUN git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 
 # Install zsh packages
