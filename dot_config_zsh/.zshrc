@@ -50,7 +50,7 @@ alias ls='ls --color=tty'
 alias reload="source ~/.zshrc"
 alias shutdown="shutdown -h now"
 alias myip="curl http://ipecho.net/plain; echo"
-alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 
 # -- Aliases navigation
 alias t1="tree -L 1 ."
