@@ -3,7 +3,9 @@
 Configuration for [Zsh](https://zsh.sourceforge.io/).
 
 ```shell
+# Install zsh
 sudo apt install zsh
+# Set zsh as default
 chsh -s $(which zsh)
 ```
 
@@ -12,8 +14,14 @@ chsh -s $(which zsh)
 ./clean.sh
 # Install plugins and configutation
 ./install.sh
-# Pull local changes into directory
-./update.sh
+# Compare local changes with remote
+./compare.sh
+```
+
+```shell
+# Test in a docker container
+docker build -t zsh-image .
+docker run -it --rm zsh-image zsh
 ```
 
 Installed plugins
