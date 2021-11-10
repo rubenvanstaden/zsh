@@ -11,11 +11,11 @@ chsh -s $(which zsh)
 
 ```shell
 # Make sure your system is clean
-./clean.sh
+./scripts/clean.sh
 # Install plugins and configutation
-./install.sh
+./scripts/install.sh
 # Compare local changes with remote
-./compare.sh
+./scripts/compare.sh
 ```
 
 ```shell
