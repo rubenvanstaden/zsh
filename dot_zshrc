@@ -4,8 +4,10 @@
 autoload -Uz compinit
 compinit
 
+
 # Set auto change directory
 setopt auto_cd
+setopt inc_append_history
 
 # # https://htr3n.github.io/2018/07/faster-zsh/
 # # Execute code in the background to not affect the current session
@@ -137,3 +139,5 @@ export MKLROOT="$MKL_PATH/compilers_and_libraries_$MKL_VERSION/linux/mkl"
 export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
 export PETSC_DIR="$HOME/packages/anyon/petsc"
 export PETSC_ARCH="arch-linux-c-debug"
+
+path+="$HOME/.cargo/bin"
