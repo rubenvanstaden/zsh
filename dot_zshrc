@@ -48,6 +48,12 @@ alias shutdown="shutdown -h now"
 alias reload="source $HOME/.config/zsh/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 
+# -- Aliases docker
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
+alias dps="docker ps"
+alias dsp="docker system prune --all --force"
+
 # -- Aliases navigation
 alias t1="tree -L 1 ."
 alias t2="tree -L 2 ."
@@ -142,7 +148,11 @@ export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
 export PETSC_DIR="$HOME/packages/anyon/petsc"
 export PETSC_ARCH="arch-linux-c-debug"
 
+export GOPATH=$HOME/go
+
 # required BY fd-find
 path+="$HOME/.cargo/bin"
 # required by poetry
 path+="$HOME/.local/bin"
+path+="$HOME/go/bin"
+path+="/usr/local/go/bin"
