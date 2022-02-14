@@ -123,26 +123,14 @@ cursor_mode
 # -------------------------------------------------------------------------------
 export PRIVATE_ENV="$HOME/.config/private"
 
-alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
-alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
 alias rmenv='rm -rf $HOME/.config/private'
-
-function mkcd() {
-  last=$(eval "echo \$$#")
-  if [ ! -n "$last" ]; then
-    echo "Enter a directory name"
-  elif [ -d $last ]; then
-    echo "\`$last' already exists"
-  else
-    mkdir $@ && cd $last
-  fi
-}
+alias luamake='/home/ruben/lua/lua-language-server/3rd/luamake/luamake'
+alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
+alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
 
 function envload() {
     export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
 }
-
-alias luamake=/home/ruben/lua/lua-language-server/3rd/luamake/luamake
 
 # -------------------------------------------------------------------------------
 # Export variables
