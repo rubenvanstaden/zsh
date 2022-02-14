@@ -1,79 +1,153 @@
-# --------------------------
-# Ruben van Staden
-# --------------------------
+# ~/.zshrc
 
-export ZSH="$HOME/.oh-my-zsh"
+# -------------------------------------------------------------------------------
+# Load completion system
+# -------------------------------------------------------------------------------
+autoload -Uz compinit
+compinit
 
-# -- Plugins
-plugins=(
-    z
-    git
-    poetry
-    docker
-    docker-compose
-    zsh-autosuggestions
-    history-substring-search
-)
+# -------------------------------------------------------------------------------
+# Set auto change directory
+# -------------------------------------------------------------------------------
+setopt auto_cd
+setopt inc_append_history
+setopt share_history
 
-source $ZSH/oh-my-zsh.sh
-
-# -- Extend PATH
-path+="$HOME/.poetry/bin"
+# -------------------------------------------------------------------------------
+# Update path variable
+# -------------------------------------------------------------------------------
+path+="/usr/local/go/bin"
+path+="$HOME/lua/lua-language-server/bin"
+# fd-find
+path+="$HOME/.cargo/bin"
+# poetry
 path+="$HOME/.local/bin"
+path+="$HOME/go/bin"
 
-# -- Aliases
+# -------------------------------------------------------------------------------
+# Plugins
+# -------------------------------------------------------------------------------
+fpath+="$HOME/.zsh/pure"
+fpath+="$HOME/.zsh/zsh-completions"
+
+source "$HOME/.zsh/z/z.sh"
+source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# -------------------------------------------------------------------------------
+# Prompt theme 
+# -------------------------------------------------------------------------------
+autoload -U promptinit
+promptinit
+prompt pure
+# Optionally define some options
+PURE_CMD_MAX_EXEC_TIME=10
+# Change the path color
+zstyle ':prompt:pure:path' color white
+# Change the color for both `prompt:success` and `prompt:error`
+zstyle ':prompt:pure:prompt:*' color cyan
+# Turn on git stash status
+zstyle ':prompt:pure:git:stash' show yes
+
+# -------------------------------------------------------------------------------
+# Aliases 
+# -------------------------------------------------------------------------------
+alias rm="rm -rf"
+alias ll="ls -al --group-directories-first"
+alias ls="ls --color=tty --group-directories-first"
+alias shutdown="shutdown -h now"
+alias reload="source $HOME/.config/zsh/.zshrc"
+alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+
+# Docker
+alias dc="docker-compose"
+alias dps="docker ps"
+alias dsp="docker system prune --all --force"
+
+# Navigation
 alias t1="tree -L 1 ."
 alias t2="tree -L 2 ."
 alias t3="tree -L 3 ."
 alias t4="tree -L 4 ."
-alias dz="nvim ~/.zshrc"
-alias di="nvim ~/.config/i3/config"
-alias dn="cd ~/.config/nvim && nvim"
-alias da="nvim ~/.config/alacritty/alacritty.yml"
-alias rm="rm -rf"
-alias reload="source ~/.zshrc"
-alias shutdown="shutdown -h now"
-alias myip="curl http://ipecho.net/plain; echo"
 
-# -- Configs
-# ZSH
-fpath+=~/.zfunc
-fpath+=${ZDOTDIR:-~}/.zsh_functions
-# Pure
-fpath+=$HOME/.zsh/pure
-autoload -U promptinit; promptinit
-prompt pure
+# Configuration
+alias di="nvim $HOME/.config/i3/config"
+alias dz="nvim $HOME/.config/zsh/.zshrc"
+alias dn="cd $HOME/.config/nvim && nvim"
+alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 
-# -- Packages
-export INSTALL_PATH="/opt/packages"
+# -------------------------------------------------------------------------------
+# Vim mode
+# -------------------------------------------------------------------------------
+bindkey -v
+# Make switch between vim modes faster
+export KEYTIMEOUT=1
+# Gives access to menuselect
+zmodload zsh/complist
 
-# -- Public Variables
-export DOCKER_BUILDKIT=1
-export PYTHONDONTWRITEBYTECODE=1
-export CONAN_REVISIONS_ENABLED=1
-export COMPOSE_DOCKER_CLI_BUILD=1
+# Key bindings 
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
 
-# -- Private Variables
-export EDITOR=/usr/bin/nvim
+# A visual indicator to show the current mode
+function cursor_mode() {
+    cursor_block='\e[2 q'
+    cursor_beam='\e[6 q'
+
+    function zle-keymap-select {
+      if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+        echo -ne $cursor_block
+      elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+        echo -ne $cursor_beam
+      fi
+    }
+
+    zle-line-init() {
+      echo -ne $cursor_beam
+    }
+
+    zle -N zle-keymap-select
+    zle -N zle-line-init
+}
+
+cursor_mode
+
+# -------------------------------------------------------------------------------
+# Manage environments
+# -------------------------------------------------------------------------------
 export PRIVATE_ENV="$HOME/.config/private"
+
 alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
 alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
+alias rmenv='rm -rf $HOME/.config/private'
 
-# -- Anyon Variables
-# DevOps
-export ANYON_EMAIL=ruben@anyonsys.com
-export GITLAB_DOCKER_TOKEN=1StzL8KWdXsEjoxq2GtZ
-export JFROG_TOKEN=AKCp8jQcqPJi9hGuQE5u48imjBp5CziGCMiEqdA8FqFVDGuEqreXv9csAHGtVXnTFNsqG4iRa
-# MPICH 
-export MPICH_VERSION="3.3.2"
-export MPICH_PATH="$INSTALL_PATH/mpich/$MPICH_VERSION"
-export PATH="$PATH:$MPICH_PATH/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$MPICH_PATH/lib/"
-# MKL
-export MKL_VERSION="2020.4.304"
-export MKL_PATH="$INSTALL_PATH/mkl/$MKL_VERSION"
-export MKLROOT="$MKL_PATH/compilers_and_libraries_$MKL_VERSION/linux/mkl"
-# Benchmark
-export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
-export PETSC_DIR="$HOME/packages/anyon/petsc"
-export PETSC_ARCH="arch-linux-c-debug"
+function mkcd() {
+  last=$(eval "echo \$$#")
+  if [ ! -n "$last" ]; then
+    echo "Enter a directory name"
+  elif [ -d $last ]; then
+    echo "\`$last' already exists"
+  else
+    mkdir $@ && cd $last
+  fi
+}
+
+function envload() {
+    export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
+}
+
+alias luamake=/home/ruben/lua/lua-language-server/3rd/luamake/luamake
+
+# -------------------------------------------------------------------------------
+# Export variables
+# -------------------------------------------------------------------------------
+export GOPATH=$HOME/go
+export DOCKER_BUILDKIT=1
+export GONOSUMDB="anyonsys.com/*"
+export GOPROXY="https://${JFROG_USER_NAME}:${JFROG_USER_TOKEN}@jfrog.anyonsys.com/artifactory/go-virtual"
