@@ -1,25 +1,32 @@
 # ~/.zshrc
 
+# -------------------------------------------------------------------------------
 # Load completion system
+# -------------------------------------------------------------------------------
 autoload -Uz compinit
 compinit
 
+# -------------------------------------------------------------------------------
 # Set auto change directory
+# -------------------------------------------------------------------------------
 setopt auto_cd
 setopt inc_append_history
 setopt share_history
 
-# # https://htr3n.github.io/2018/07/faster-zsh/
-# # Execute code in the background to not affect the current session
-# {
-#   # Compile zcompdump, if modified, to increase startup speed.
-#   zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-#   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-#     zcompile "$zcompdump"
-#   fi
-# } &!
+# -------------------------------------------------------------------------------
+# Update path variable
+# -------------------------------------------------------------------------------
+path+="/usr/local/go/bin"
+path+="$HOME/lua/lua-language-server/bin"
+# fd-find
+path+="$HOME/.cargo/bin"
+# poetry
+path+="$HOME/.local/bin"
+path+="$HOME/go/bin"
 
-# -- Plugins
+# -------------------------------------------------------------------------------
+# Plugins
+# -------------------------------------------------------------------------------
 fpath+="$HOME/.zsh/pure"
 fpath+="$HOME/.zsh/zsh-completions"
 
@@ -27,7 +34,9 @@ source "$HOME/.zsh/z/z.sh"
 source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
-# -- Prompt theme
+# -------------------------------------------------------------------------------
+# Prompt theme 
+# -------------------------------------------------------------------------------
 autoload -U promptinit
 promptinit
 prompt pure
@@ -40,7 +49,9 @@ zstyle ':prompt:pure:prompt:*' color cyan
 # Turn on git stash status
 zstyle ':prompt:pure:git:stash' show yes
 
-# -- Aliases general
+# -------------------------------------------------------------------------------
+# Aliases 
+# -------------------------------------------------------------------------------
 alias rm="rm -rf"
 alias ll="ls -al --group-directories-first"
 alias ls="ls --color=tty --group-directories-first"
@@ -48,39 +59,36 @@ alias shutdown="shutdown -h now"
 alias reload="source $HOME/.config/zsh/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 
-# -- Aliases docker
-alias dcu="docker-compose up"
-alias dcd="docker-compose down"
+# Docker
+alias dc="docker-compose"
 alias dps="docker ps"
 alias dsp="docker system prune --all --force"
 
-# -- Aliases navigation
+# Navigation
 alias t1="tree -L 1 ."
 alias t2="tree -L 2 ."
 alias t3="tree -L 3 ."
 alias t4="tree -L 4 ."
 
-# -- Aliases configuration
+# Configuration
 alias di="nvim $HOME/.config/i3/config"
 alias dz="nvim $HOME/.config/zsh/.zshrc"
 alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 
-# -- Vim mode
+# -------------------------------------------------------------------------------
+# Vim mode
+# -------------------------------------------------------------------------------
 bindkey -v
-
 # Make switch between vim modes faster
 export KEYTIMEOUT=1
-
 # Gives access to menuselect
 zmodload zsh/complist
 
+# Key bindings 
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
-
 bindkey -M menuselect 'h' vi-backward-char
-# bindkey -M menuselect 'k' vi-up-line-or-history
-# bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 # A visual indicator to show the current mode
@@ -110,8 +118,11 @@ function cursor_mode() {
 
 cursor_mode
 
-# FIXME: Improve this
+# -------------------------------------------------------------------------------
+# Manage environments
+# -------------------------------------------------------------------------------
 export PRIVATE_ENV="$HOME/.config/private"
+
 alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
 alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
 alias rmenv='rm -rf $HOME/.config/private'
@@ -127,32 +138,16 @@ function mkcd() {
   fi
 }
 
-# -- Anyon Variables
-export INSTALL_PATH="/opt/packages"
-# DevOps
-export ANYON_EMAIL=ruben@anyonsys.com
-export GITLAB_DOCKER_TOKEN=1StzL8KWdXsEjoxq2GtZ
-export JFROG_USER_NAME=ruben
-export JFROG_USER_TOKEN=AKCp8k8EMq3BcuEeit42pDzrRJ7G8YusGWePJQ6831iNVmQrNWHGfcuFqyGCjNZNEcqv4GUGC
-# MPICH 
-export MPICH_VERSION="3.3.2"
-export MPICH_PATH="$INSTALL_PATH/mpich/$MPICH_VERSION"
-export PATH="$PATH:$MPICH_PATH/bin"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$MPICH_PATH/lib/"
-# MKL
-export MKL_VERSION="2020.4.304"
-export MKL_PATH="$INSTALL_PATH/mkl/$MKL_VERSION"
-export MKLROOT="$MKL_PATH/compilers_and_libraries_$MKL_VERSION/linux/mkl"
-# Benchmark
-export FlameGraph_DIR="$HOME/packages/anyon/FlameGraph"
-export PETSC_DIR="$HOME/packages/anyon/petsc"
-export PETSC_ARCH="arch-linux-c-debug"
+function envload() {
+    export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
+}
 
+alias luamake=/home/ruben/lua/lua-language-server/3rd/luamake/luamake
+
+# -------------------------------------------------------------------------------
+# Export variables
+# -------------------------------------------------------------------------------
 export GOPATH=$HOME/go
-
-# required BY fd-find
-path+="$HOME/.cargo/bin"
-# required by poetry
-path+="$HOME/.local/bin"
-path+="$HOME/go/bin"
-path+="/usr/local/go/bin"
+export DOCKER_BUILDKIT=1
+export GONOSUMDB="anyonsys.com/*"
+export GOPROXY="https://${JFROG_USER_NAME}:${JFROG_USER_TOKEN}@jfrog.anyonsys.com/artifactory/go-virtual"
