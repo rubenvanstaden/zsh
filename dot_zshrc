@@ -58,6 +58,7 @@ alias ls="ls --color=tty --group-directories-first"
 alias shutdown="shutdown -h now"
 alias reload="source $HOME/.config/zsh/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+alias cx="chmod +x *.sh"
 
 # Docker
 alias dc="docker-compose"
