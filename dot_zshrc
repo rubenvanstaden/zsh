@@ -16,13 +16,11 @@ setopt share_history
 # -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
-path+="/usr/local/go/bin"
-path+="$HOME/lua/lua-language-server/bin"
-# fd-find
-path+="$HOME/.cargo/bin"
-# poetry
-path+="$HOME/.local/bin"
-path+="$HOME/go/bin"
+path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+path+="$HOME/.cargo/bin"                   # fd-find
+path+="$HOME/.local/bin"                   # poetry
+path+="$HOME/go/bin"                       # go program binanries
+path+="/usr/local/go/bin"                  # go program binanries
 
 # -------------------------------------------------------------------------------
 # Plugins
@@ -132,11 +130,3 @@ alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo
 function envload() {
     export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
 }
-
-# -------------------------------------------------------------------------------
-# Export variables
-# -------------------------------------------------------------------------------
-export GOPATH=$HOME/go
-export DOCKER_BUILDKIT=1
-export GONOSUMDB="anyonsys.com/*"
-export GOPROXY="https://${JFROG_USER_NAME}:${JFROG_USER_TOKEN}@jfrog.anyonsys.com/artifactory/go-virtual"
