@@ -66,10 +66,10 @@ alias dps="docker ps"
 alias dsp="docker system prune --all --force"
 
 # Navigation
-alias t1="tree -L 1 ."
-alias t2="tree -L 2 ."
-alias t3="tree -L 3 ."
-alias t4="tree -L 4 ."
+alias t1="tree -C -L 1 ."
+alias t2="tree -C -L 2 ."
+alias t3="tree -C -L 3 ."
+alias t4="tree -C -L 4 ."
 
 # Configuration
 alias di="nvim $HOME/.config/i3/config"

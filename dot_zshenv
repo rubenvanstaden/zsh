@@ -15,3 +15,8 @@ export HISTFILE="$ZDOTDIR/.zhistory"    # History filepath
 export HISTSIZE=10000                   # Maximum events for internal history
 export SAVEHIST=10000                   # Maximum events in history file
 #. "$HOME/.cargo/env"
+#
+export ANYON_EMAIL="ruben@anyonsys.com"
+export GITLAB_DOCKER_TOKEN="1StzL8KWdXsEjoxq2GtZ"
+export JFROG_USER_NAME="ruben"
+export JFROG_USER_TOKEN="AKCp8k8EMq3BcuEeit42pDzrRJ7G8YusGWePJQ6831iNVmQrNWHGfcuFqyGCjNZNEcqv4GUGC"
