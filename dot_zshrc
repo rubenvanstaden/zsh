@@ -17,7 +17,7 @@ setopt share_history
 # Update path variable
 # -------------------------------------------------------------------------------
 path+="$HOME/lua/lua-language-server/bin"  # lua lsp
-path+="$HOME/.cargo/bin"                   # fd-find
+# path+="$HOME/.cargo/bin"                   # fd-find
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
 path+="/usr/local/go/bin"                  # go program binanries
@@ -131,3 +131,8 @@ alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo
 function envload() {
     export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
 }
+
+alias iq='cd $HOME/go/src/anyonsys.com/qcs/infrastructure'
+alias it='cd $HOME/go/src/anyonsys.com/thunderhead/infrastructure'
+alias io='cd $HOME/go/src/anyonsys.com/observability/infrastructure'
+alias is='cd $HOME/go/src/anyonsys.com/security/infrastructure'
