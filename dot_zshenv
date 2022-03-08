@@ -41,6 +41,10 @@ export JFROG_USER_TOKEN="AKCp8k8EMq3BcuEeit42pDzrRJ7G8YusGWePJQ6831iNVmQrNWHGfcu
 export GONOSUMDB="anyonsys.com/*"
 export GOPROXY="https://${JFROG_USER_NAME}:${JFROG_USER_TOKEN}@jfrog.anyonsys.com/artifactory/go-virtual"
 
+export TH_USERNAME="rubenvs"
+export TH_PASSWORD='password'
+
 # export SNOWFLAKE_ID="rubenvs"
 # export SNOWFLAKE_TOKEN="faketoken"
 # export SNOWFLAKE_HOST="localhost:8081"
+. "$HOME/.cargo/env"
