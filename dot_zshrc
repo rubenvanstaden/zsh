@@ -17,7 +17,6 @@ setopt share_history
 # Update path variable
 # -------------------------------------------------------------------------------
 path+="$HOME/lua/lua-language-server/bin"  # lua lsp
-# path+="$HOME/.cargo/bin"                   # fd-find
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
 path+="/usr/local/go/bin"                  # go program binanries
@@ -60,8 +59,8 @@ alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias cx="chmod +x *.sh"
 
 # Docker
-alias dc="docker-compose"
-alias dps="docker ps"
+alias dd="docker"
+alias dc="docker compose"
 alias dsp="docker system prune --all --force"
 
 # Navigation
