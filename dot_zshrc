@@ -1,14 +1,14 @@
-# ~/.zshrc
-
 # -------------------------------------------------------------------------------
 # Load completion system
 # -------------------------------------------------------------------------------
+
 autoload -Uz compinit
 compinit
 
 # -------------------------------------------------------------------------------
 # Set auto change directory
 # -------------------------------------------------------------------------------
+
 setopt auto_cd
 setopt inc_append_history
 setopt share_history
@@ -16,14 +16,16 @@ setopt share_history
 # -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
-path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
 path+="/usr/local/go/bin"                  # go program binanries
+path+="$HOME/lua/lua-language-server/bin"  # lua lsp
 
 # -------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------
+
 fpath+="$HOME/.zsh/pure"
 fpath+="$HOME/.zsh/zsh-completions"
 
@@ -34,6 +36,7 @@ source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # -------------------------------------------------------------------------------
 # Prompt theme 
 # -------------------------------------------------------------------------------
+
 autoload -U promptinit
 promptinit
 prompt pure
@@ -49,35 +52,50 @@ zstyle ':prompt:pure:git:stash' show yes
 # -------------------------------------------------------------------------------
 # Aliases 
 # -------------------------------------------------------------------------------
+
 alias nv="nvim"
 alias rm="rm -rf"
+alias mkdir="mkdir -p"
 alias ll="ls -al --group-directories-first"
 alias ls="ls --color=tty --group-directories-first"
 alias shutdown="shutdown -h now"
-alias reload="source $HOME/.config/zsh/.zshrc"
+alias reload="source $HOME/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias cx="chmod +x *.sh"
 
 # Docker
 alias dd="docker"
 alias dc="docker compose"
-alias dsp="docker system prune --all --force"
+alias dcs="docker stop $(docker ps -a -q)"          # docker container stop
+alias dcr="docker rm $(docker ps -a -q)"            # docker container remove
+alias dvr="docker volume rm $(docker volume ls -q)" # docker volume remove
+alias dsp="docker system prune --all --force"       # docker system prune
 
 # Navigation
-alias t1="tree -C -L 1 ."
-alias t2="tree -C -L 2 ."
-alias t3="tree -C -L 3 ."
-alias t4="tree -C -L 4 ."
+alias t1="tree --dirsfirst -C -L 1 ."
+alias t2="tree --dirsfirst -C -L 2 ."
+alias t3="tree --dirsfirst -C -L 3 ."
+alias t4="tree --dirsfirst -C -L 4 ."
 
 # Configuration
+alias dz="nvim $HOME/.zshrc"
 alias di="nvim $HOME/.config/i3/config"
-alias dz="nvim $HOME/.config/zsh/.zshrc"
 alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 
 # -------------------------------------------------------------------------------
-# Vim mode
+# Custom Functions
 # -------------------------------------------------------------------------------
+
+# Function to load a set of env vars from a defined file.
+function envload() {
+    export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
+}
+
+# -------------------------------------------------------------------------------
+# Vim Mode
+# -------------------------------------------------------------------------------
+
 bindkey -v
 # Make switch between vim modes faster
 export KEYTIMEOUT=1
@@ -116,22 +134,3 @@ function cursor_mode() {
 }
 
 cursor_mode
-
-# -------------------------------------------------------------------------------
-# Manage environments
-# -------------------------------------------------------------------------------
-export PRIVATE_ENV="$HOME/.config/private"
-
-alias rmenv='rm -rf $HOME/.config/private'
-alias luamake='/home/ruben/lua/lua-language-server/3rd/luamake/luamake'
-alias mkenv='test -d $PRIVATE_ENV && echo "Already exists" || python3 -m venv $PRIVATE_ENV; activate'
-alias activate='test -d $PRIVATE_ENV && source $PRIVATE_ENV/bin/activate || echo "No Virtualenv in the current folder"'
-
-function envload() {
-    export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
-}
-
-alias iq='cd $HOME/go/src/anyonsys.com/qcs/infrastructure'
-alias it='cd $HOME/go/src/anyonsys.com/thunderhead/infrastructure'
-alias io='cd $HOME/go/src/anyonsys.com/observability/infrastructure'
-alias is='cd $HOME/go/src/anyonsys.com/security/infrastructure'
