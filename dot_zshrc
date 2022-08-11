@@ -14,42 +14,6 @@ setopt inc_append_history
 setopt share_history
 
 # -------------------------------------------------------------------------------
-# Update path variable
-# -------------------------------------------------------------------------------
-
-path+="$HOME/.local/bin"                   # poetry
-path+="$HOME/go/bin"                       # go program binanries
-path+="/usr/local/go/bin"                  # go program binanries
-path+="$HOME/lua/lua-language-server/bin"  # lua lsp
-
-# -------------------------------------------------------------------------------
-# Plugins
-# -------------------------------------------------------------------------------
-
-fpath+="$HOME/.zsh/pure"
-fpath+="$HOME/.zsh/zsh-completions"
-
-source "$HOME/.zsh/z/z.sh"
-source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
-# -------------------------------------------------------------------------------
-# Prompt theme 
-# -------------------------------------------------------------------------------
-
-autoload -U promptinit
-promptinit
-prompt pure
-# Optionally define some options
-PURE_CMD_MAX_EXEC_TIME=10
-# Change the path color
-zstyle ':prompt:pure:path' color white
-# Change the color for both `prompt:success` and `prompt:error`
-zstyle ':prompt:pure:prompt:*' color cyan
-# Turn on git stash status
-zstyle ':prompt:pure:git:stash' show yes
-
-# -------------------------------------------------------------------------------
 # Aliases 
 # -------------------------------------------------------------------------------
 
@@ -79,9 +43,46 @@ alias t4="tree --dirsfirst -C -L 4 ."
 
 # Configuration
 alias dz="nvim $HOME/.zshrc"
+alias de="nvim $HOME/.zshenv"
 alias di="nvim $HOME/.config/i3/config"
 alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
+
+# -------------------------------------------------------------------------------
+# Update path variable
+# -------------------------------------------------------------------------------
+
+path+="$HOME/.local/bin"                   # poetry
+path+="$HOME/go/bin"                       # go program binanries
+path+="/usr/local/go/bin"                  # go program binanries
+path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+
+# -------------------------------------------------------------------------------
+# Plugins
+# -------------------------------------------------------------------------------
+
+fpath+="$HOME/.zsh/pure"
+fpath+="$HOME/.zsh/zsh-completions"
+
+source "$HOME/.zsh/z/z.sh"
+source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# -------------------------------------------------------------------------------
+# Command Prompt
+# -------------------------------------------------------------------------------
+
+autoload -U promptinit
+promptinit
+prompt pure
+# Optionally define some options
+PURE_CMD_MAX_EXEC_TIME=10
+# Change the path color
+zstyle ':prompt:pure:path' color white
+# Change the color for both `prompt:success` and `prompt:error`
+zstyle ':prompt:pure:prompt:*' color cyan
+# Turn on git stash status
+zstyle ':prompt:pure:git:stash' show yes
 
 # -------------------------------------------------------------------------------
 # Custom Functions
