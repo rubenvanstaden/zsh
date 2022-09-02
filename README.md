@@ -5,6 +5,7 @@ Configuration for [Zsh](https://zsh.sourceforge.io/).
 ```shell
 # Install zsh
 sudo apt install zsh
+
 # Set zsh as default
 chsh -s $(which zsh)
 ```
@@ -12,8 +13,10 @@ chsh -s $(which zsh)
 ```shell
 # Make sure your system is clean
 ./scripts/clean.sh
+
 # Install plugins and configutation
 ./scripts/install.sh
+
 # Compare local changes with remote
 ./scripts/compare.sh
 ```
@@ -24,7 +27,7 @@ docker build -t zsh-image .
 docker run -it --rm zsh-image zsh
 ```
 
-## Installed plugins
+## Plugins
 
 * [z](https://github.com/rupa/z)
 * [pure](https://github.com/sindresorhus/pure)
@@ -32,7 +35,7 @@ docker run -it --rm zsh-image zsh
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 * [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
 
-## Tutorials
+## References
 
 - [Mastering Zsh](https://github.com/rothgar/mastering-zsh)
 - [Zsh completion guide](https://thevaluable.dev/zsh-completion-guide-examples/)
