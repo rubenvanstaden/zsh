@@ -1,5 +1,6 @@
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#646464"
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#646464"
 
+# . "$HOME/.cargo/env"
 # export XDG_CONFIG_HOME="$HOME/.config"
 # export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
 # export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
@@ -13,5 +14,3 @@ export SAVEHIST=1000              # Maximum events in history file
 
 export GOPATH=$HOME/go
 export DOCKER_BUILDKIT=1
-
-. "$HOME/.cargo/env"

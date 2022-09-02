@@ -27,14 +27,6 @@ alias reload="source $HOME/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias cx="chmod +x *.sh"
 
-# Docker
-alias dd="docker"
-alias dc="docker compose"
-alias dcs="docker stop $(docker ps -a -q)"          # docker container stop
-alias dcr="docker rm $(docker ps -a -q)"            # docker container remove
-alias dvr="docker volume rm $(docker volume ls -q)" # docker volume remove
-alias dsp="docker system prune --all --force"       # docker system prune
-
 # Navigation
 alias t1="tree --dirsfirst -C -L 1 ."
 alias t2="tree --dirsfirst -C -L 2 ."
