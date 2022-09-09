@@ -45,6 +45,7 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 # -------------------------------------------------------------------------------
 
 path+="$HOME/.local/bin"                   # poetry
+path+="$HOME/.cargo/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
 path+="/usr/local/go/bin"                  # go program binanries
 path+="$HOME/lua/lua-language-server/bin"  # lua lsp
