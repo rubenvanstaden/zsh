@@ -17,6 +17,7 @@ setopt share_history
 # Aliases 
 # -------------------------------------------------------------------------------
 
+alias rmtar="rm -rf *.tar.*"
 alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"

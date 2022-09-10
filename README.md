@@ -6,8 +6,11 @@ Configuration for [Zsh](https://zsh.sourceforge.io/).
 # Install zsh
 sudo apt install zsh
 
-# Set zsh as default
+# Set user
 chsh -s $(which zsh)
+
+# Set root
+sudo chsh -s $(which zsh)
 ```
 
 ```shell
