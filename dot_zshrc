@@ -17,14 +17,15 @@ setopt share_history
 # Aliases 
 # -------------------------------------------------------------------------------
 
-alias rmtar="rm -rf *.tar.*"
+alias hload="fc -R $HOME/.zsh_history"
+alias rload="source $HOME/.zshrc"
+alias rmtar="rm -rf *.tar.gz"
 alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"
 alias ll="ls -al --group-directories-first"
 alias ls="ls --color=tty --group-directories-first"
 alias shutdown="shutdown -h now"
-alias reload="source $HOME/.zshrc"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias cx="chmod +x *.sh"
 
@@ -48,8 +49,8 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/.cargo/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
-path+="/usr/local/go/bin"                  # go program binanries
-path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+# path+="/usr/local/go/bin"                  # go program binanries
+# path+="$HOME/lua/lua-language-server/bin"  # lua lsp
 
 # -------------------------------------------------------------------------------
 # Plugins
@@ -83,6 +84,9 @@ zstyle ':prompt:pure:git:stash' show yes
 # -------------------------------------------------------------------------------
 
 # Function to load a set of env vars from a defined file.
+# 
+# Example:
+#   envload .env
 function envload() {
     export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
 }

@@ -9,8 +9,9 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 export HISTFILE="$HOME/.zhistory" # History filepath
-export HISTSIZE=1000              # Maximum events for internal history
-export SAVEHIST=1000              # Maximum events in history file
+export HISTSIZE=10000              # Maximum events for internal history
+export SAVEHIST=10000              # Maximum events in history file
 
 export GOPATH=$HOME/go
+export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
 export DOCKER_BUILDKIT=1
