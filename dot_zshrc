@@ -49,7 +49,7 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/.cargo/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
-# path+="/usr/local/go/bin"                  # go program binanries
+path+="/usr/local/go/bin"                  # go program binanries
 # path+="$HOME/lua/lua-language-server/bin"  # lua lsp
 
 # -------------------------------------------------------------------------------
@@ -67,17 +67,22 @@ source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Command Prompt
 # -------------------------------------------------------------------------------
 
-autoload -U promptinit
-promptinit
-prompt pure
-# Optionally define some options
-PURE_CMD_MAX_EXEC_TIME=10
-# Change the path color
-zstyle ':prompt:pure:path' color white
-# Change the color for both `prompt:success` and `prompt:error`
-zstyle ':prompt:pure:prompt:*' color cyan
-# Turn on git stash status
-zstyle ':prompt:pure:git:stash' show yes
+# https://github.com/reobin/typewritten
+fpath+=$HOME/.zsh/typewritten
+autoload -U promptinit; promptinit
+prompt typewritten
+
+# autoload -U promptinit
+# promptinit
+# prompt pure
+# # Optionally define some options
+# PURE_CMD_MAX_EXEC_TIME=10
+# # Change the path color
+# zstyle ':prompt:pure:path' color white
+# # Change the color for both `prompt:success` and `prompt:error`
+# zstyle ':prompt:pure:prompt:*' color cyan
+# # Turn on git stash status
+# zstyle ':prompt:pure:git:stash' show yes
 
 # -------------------------------------------------------------------------------
 # Custom Functions
