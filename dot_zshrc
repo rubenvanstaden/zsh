@@ -24,7 +24,7 @@ alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"
 alias ll="ls -al --group-directories-first"
-alias ls="ls --color=tty --group-directories-first"
+alias l="ls --color=tty --group-directories-first"
 alias shutdown="shutdown -h now"
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias cx="chmod +x *.sh"
@@ -47,10 +47,10 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 # -------------------------------------------------------------------------------
 
 # User env vars
-path+="$HOME/.local/bin"                   # poetry
-path+="$HOME/.cargo/bin"                   # poetry
-path+="$HOME/go/bin"                       # go program binanries
-path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+path+="$HOME/.local/bin"
+path+="$HOME/.cargo/bin"
+path+="$HOME/go/bin"
+path+="$HOME/lua/lua-language-server/bin"
 
 # System wide env vars
 # path+="/usr/local/go/bin"                  # go program binanries
@@ -69,37 +69,54 @@ source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Command Prompt
 # -------------------------------------------------------------------------------
 
-autoload -U promptinit
-promptinit
-
-function git_branch_name()
-{
-    branch=$(git symbolic-ref --short HEAD 2> /dev/null | awk '{print $NF}')
-    if [[ $branch == "" ]]; then
-        echo ''
-    else
-        echo '\n('$branch')'
-    fi
-}
-
+# Autoload zsh add-zsh-hook and vcs_info functions (-U autoload w/o substition, -z use zsh style)
+autoload -Uz add-zsh-hook vcs_info
 # Enable substitution in the prompt.
 setopt prompt_subst
+# Run vcs_info just before a prompt is displayed (precmd)
+add-zsh-hook precmd vcs_info
 
 # Config for prompt. PS1 synonym.
-prompt=$'%B%F{240}$(git_branch_name)%f%b\n'
-prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
+prompt=$'\n%B%F{240}${vcs_info_msg_0_}%f%b\n'
+prompt+=$'%F{242}%~%f %F{cyan}>%f '
 
-# -------------------------------------------------------------------------------
-# Custom Functions
-# -------------------------------------------------------------------------------
+# Prompt the error codes
+# prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
 
-# Function to load a set of env vars from a defined file.
-# 
-# Example:
-#   envload .env
-function envload() {
-    export $(cat $1 | egrep -v "(^#.*|^$)" | xargs)
-}
+# Enable checking for (un)staged changes, enabling use of %u and %c
+zstyle ':vcs_info:*' check-for-changes true
+# Set custom strings for an unstaged changes (*)
+zstyle ':vcs_info:*' unstagedstr ' %F{red}*%f'
+# Set custom strings for staged changes (+)
+zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
+# Set the format of the git information for vcs_info
+zstyle ':vcs_info:git:*' formats       '(%b%u%c%F{240})%f'
+# Used when the prompt is displayed and git is in the middle of an action (like rebase, merge, or cherry-pick)
+zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
+
+# # -------------------------------------------------------------------------------
+# # Command Prompt
+# # -------------------------------------------------------------------------------
+#
+# autoload -U promptinit
+# promptinit
+#
+# function git_branch_name()
+# {
+#     branch=$(git symbolic-ref --short HEAD 2> /dev/null | awk '{print $NF}')
+#     if [[ $branch == "" ]]; then
+#         echo ''
+#     else
+#         echo '\n('$branch')'
+#     fi
+# }
+#
+# # Enable substitution in the prompt.
+# setopt prompt_subst
+#
+# # Config for prompt. PS1 synonym.
+# prompt=$'%B%F{240}$(git_branch_name)%f%b\n'
+# prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
 
 # -------------------------------------------------------------------------------
 # Vim Mode
