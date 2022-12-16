@@ -14,6 +14,22 @@ setopt inc_append_history
 setopt share_history
 
 # -------------------------------------------------------------------------------
+# Environment 
+# -------------------------------------------------------------------------------
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+export HISTFILE="$HOME/.zhistory" # History filepath
+export HISTSIZE=10000              # Maximum events for internal history
+export SAVEHIST=10000              # Maximum events in history file
+
+# export GOPATH=/usr/local/go
+# export GOPATH=$HOME/go
+# export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
+export DOCKER_BUILDKIT=1
+
+# -------------------------------------------------------------------------------
 # Aliases 
 # -------------------------------------------------------------------------------
 
@@ -59,10 +75,14 @@ path+="$HOME/lua/lua-language-server/bin"
 # Plugins
 # -------------------------------------------------------------------------------
 
+# https://github.com/zsh-users/zsh-completions
 fpath+="$HOME/.zsh/zsh-completions"
 
+# https://github.com/rupa/z
 source "$HOME/.zsh/z/z.sh"
+# https://github.com/zsh-users/zsh-autosuggestions
 source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# https://github.com/zsh-users/zsh-history-substring-search 
 source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
 # -------------------------------------------------------------------------------
@@ -96,30 +116,6 @@ zstyle ':vcs_info:git:*' formats       '(%b%u%c%F{240})%f'
 # Used when the prompt is displayed and git is in the middle of an action (like rebase, merge, or cherry-pick)
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
 
-# # -------------------------------------------------------------------------------
-# # Command Prompt
-# # -------------------------------------------------------------------------------
-#
-# autoload -U promptinit
-# promptinit
-#
-# function git_branch_name()
-# {
-#     branch=$(git symbolic-ref --short HEAD 2> /dev/null | awk '{print $NF}')
-#     if [[ $branch == "" ]]; then
-#         echo ''
-#     else
-#         echo '\n('$branch')'
-#     fi
-# }
-#
-# # Enable substitution in the prompt.
-# setopt prompt_subst
-#
-# # Config for prompt. PS1 synonym.
-# prompt=$'%B%F{240}$(git_branch_name)%f%b\n'
-# prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
-
 # -------------------------------------------------------------------------------
 # Vim Mode
 # -------------------------------------------------------------------------------
@@ -138,6 +134,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 
 # A visual indicator to show the current mode
 function cursor_mode() {
+
     cursor_block='\e[2 q'
     cursor_beam='\e[6 q'
 

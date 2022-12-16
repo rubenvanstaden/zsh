@@ -3,9 +3,6 @@
 Configuration for [Zsh](https://zsh.sourceforge.io/).
 
 ```shell
-# Install zsh
-sudo apt install zsh
-
 # Set user
 chsh -s $(which zsh)
 
@@ -15,28 +12,16 @@ sudo chsh -s $(which zsh)
 
 ```shell
 # Make sure your system is clean
-./scripts/clean.sh
+USER_PATH=$HOME ./clean.sh
+USER_PATH=/root ./clean.sh
 
 # Install plugins and configutation
-./scripts/install.sh
+USER_PATH=$HOME ./install.sh
+USER_PATH=/root ./install.sh
 
 # Compare local changes with remote
-./scripts/compare.sh
+./compare.sh
 ```
-
-```shell
-# Test in a docker container
-docker build -t zsh-image .
-docker run -it --rm zsh-image zsh
-```
-
-## Plugins
-
-* [z](https://github.com/rupa/z)
-* [pure](https://github.com/sindresorhus/pure)
-* [zsh-completions](https://github.com/zsh-users/zsh-completions)
-* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-* [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
 
 ## References
 
