@@ -35,7 +35,7 @@ alias mkdir="mkdir -p"
 alias ll="ls -al --group-directories-first"
 alias l="ls --color=tty --group-directories-first"
 alias shutdown="shutdown -h now"
-alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
+alias grep="grep --color=auto --exclude-dir={.git}"
 alias cx="chmod +x *.sh"
 
 # Navigation
@@ -46,7 +46,6 @@ alias t4="tree --dirsfirst -C -L 4 ."
 
 # Configuration
 alias dz="nvim $HOME/.zshrc"
-alias de="nvim $HOME/.zshenv"
 alias di="nvim $HOME/.config/i3/config"
 alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
@@ -80,39 +79,42 @@ source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # -------------------------------------------------------------------------------
 
 # https://salferrarello.com/zsh-git-status-prompt/
+# https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
 
 # Autoload zsh add-zsh-hook and vcs_info functions (-U autoload w/o substition, -z use zsh style)
 autoload -Uz add-zsh-hook vcs_info
+
 # Enable substitution in the prompt.
 setopt prompt_subst
+
 # Run vcs_info just before a prompt is displayed (precmd)
 add-zsh-hook precmd vcs_info
 
 # Config for prompt. PS1 synonym.
-prompt=$'\n%B%F{240}${vcs_info_msg_0_}%f%b\n'
+prompt=$'%B%F{240}${vcs_info_msg_0_}%f%b\n'
 prompt+=$'%F{242}%~%f %F{cyan}>%f '
-
-# Prompt the error codes
-# prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true
+
 # Set custom strings for an unstaged changes (*)
 zstyle ':vcs_info:*' unstagedstr ' %F{red}*%f'
+
 # Set custom strings for staged changes (+)
 zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
+
 # Set the format of the git information for vcs_info
-zstyle ':vcs_info:git:*' formats '(%b%m%u%c%F{240})%f'
-# Used when the prompt is displayed and git is in the middle of an action (like rebase, merge, or cherry-pick)
-zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
+zstyle ':vcs_info:git:*' formats $'\n(%b%m%u%c%F{240})%f'
 
 # -------------------------------------------------------------------------------
 # Vim Mode
 # -------------------------------------------------------------------------------
 
 bindkey -v
+
 # Make switch between vim modes faster
 export KEYTIMEOUT=1
+
 # Gives access to menuselect
 zmodload zsh/complist
 
