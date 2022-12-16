@@ -20,13 +20,6 @@ setopt share_history
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-export HISTFILE="$HOME/.zhistory" # History filepath
-export HISTSIZE=10000              # Maximum events for internal history
-export SAVEHIST=10000              # Maximum events in history file
-
-# export GOPATH=/usr/local/go
-# export GOPATH=$HOME/go
-# export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
 export DOCKER_BUILDKIT=1
 
 # -------------------------------------------------------------------------------
@@ -67,9 +60,6 @@ path+="$HOME/.local/bin"
 path+="$HOME/.cargo/bin"
 path+="$HOME/go/bin"
 path+="$HOME/lua/lua-language-server/bin"
-
-# System wide env vars
-# path+="/usr/local/go/bin"                  # go program binanries
 
 # -------------------------------------------------------------------------------
 # Plugins
@@ -112,7 +102,7 @@ zstyle ':vcs_info:*' unstagedstr ' %F{red}*%f'
 # Set custom strings for staged changes (+)
 zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
 # Set the format of the git information for vcs_info
-zstyle ':vcs_info:git:*' formats       '(%b%u%c%F{240})%f'
+zstyle ':vcs_info:git:*' formats '(%b%m%u%c%F{240})%f'
 # Used when the prompt is displayed and git is in the middle of an action (like rebase, merge, or cherry-pick)
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
 
