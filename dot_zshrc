@@ -46,17 +46,19 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 # Update path variable
 # -------------------------------------------------------------------------------
 
+# User env vars
 path+="$HOME/.local/bin"                   # poetry
 path+="$HOME/.cargo/bin"                   # poetry
 path+="$HOME/go/bin"                       # go program binanries
-path+="/usr/local/go/bin"                  # go program binanries
-# path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+path+="$HOME/lua/lua-language-server/bin"  # lua lsp
+
+# System wide env vars
+# path+="/usr/local/go/bin"                  # go program binanries
 
 # -------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------
 
-fpath+="$HOME/.zsh/pure"
 fpath+="$HOME/.zsh/zsh-completions"
 
 source "$HOME/.zsh/z/z.sh"
@@ -67,22 +69,25 @@ source "$HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Command Prompt
 # -------------------------------------------------------------------------------
 
-# https://github.com/reobin/typewritten
-fpath+=$HOME/.zsh/typewritten
-autoload -U promptinit; promptinit
-prompt typewritten
+autoload -U promptinit
+promptinit
 
-# autoload -U promptinit
-# promptinit
-# prompt pure
-# # Optionally define some options
-# PURE_CMD_MAX_EXEC_TIME=10
-# # Change the path color
-# zstyle ':prompt:pure:path' color white
-# # Change the color for both `prompt:success` and `prompt:error`
-# zstyle ':prompt:pure:prompt:*' color cyan
-# # Turn on git stash status
-# zstyle ':prompt:pure:git:stash' show yes
+function git_branch_name()
+{
+    branch=$(git symbolic-ref --short HEAD 2> /dev/null | awk '{print $NF}')
+    if [[ $branch == "" ]]; then
+        echo ''
+    else
+        echo '\n('$branch')'
+    fi
+}
+
+# Enable substitution in the prompt.
+setopt prompt_subst
+
+# Config for prompt. PS1 synonym.
+prompt=$'%B%F{240}$(git_branch_name)%f%b\n'
+prompt+=$'%B%(?.%F{green}*.%F{red}* [%?])%f%b %F{242}%~%f %F{cyan}>%f '
 
 # -------------------------------------------------------------------------------
 # Custom Functions
@@ -118,19 +123,15 @@ function cursor_mode() {
     cursor_beam='\e[6 q'
 
     function zle-keymap-select {
-      if [[ ${KEYMAP} == vicmd ]] ||
-        [[ $1 = 'block' ]]; then
-        echo -ne $cursor_block
-      elif [[ ${KEYMAP} == main ]] ||
-        [[ ${KEYMAP} == viins ]] ||
-        [[ ${KEYMAP} = '' ]] ||
-        [[ $1 = 'beam' ]]; then
-        echo -ne $cursor_beam
-      fi
+        if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+            echo -ne $cursor_block
+        elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+            echo -ne $cursor_beam
+        fi
     }
 
     zle-line-init() {
-      echo -ne $cursor_beam
+        echo -ne $cursor_beam
     }
 
     zle -N zle-keymap-select
