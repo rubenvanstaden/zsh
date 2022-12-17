@@ -36,8 +36,8 @@ alias ll="ls -al --group-directories-first"
 alias ls="ls --color=tty --group-directories-first"
 alias l="ls"
 alias c="clear"
-alias shutdown="shutdown -h now"
 alias grep="grep --color=auto --exclude-dir={.git}"
+alias shutdown="shutdown -h now"
 alias cx="chmod +x *.sh"
 
 # Navigation
@@ -92,9 +92,11 @@ setopt prompt_subst
 # Run vcs_info just before a prompt is displayed (precmd)
 add-zsh-hook precmd vcs_info
 
-# Config for prompt. PS1 synonym.
-prompt=$'%B%F{240}${vcs_info_msg_0_}%f%b\n'
-prompt+=$'%F{242}%~%f %F{cyan}>%f '
+# # Config for prompt. PS1 synonym.
+# prompt=$'%B%F{240}${vcs_info_msg_0_}%f%b\n'
+# prompt+=$'%F{242}%~%f %F{cyan}>%f '
+
+prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %F{cyan}>%f '
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true
@@ -106,7 +108,7 @@ zstyle ':vcs_info:*' unstagedstr ' %F{red}*%f'
 zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
 
 # Set the format of the git information for vcs_info
-zstyle ':vcs_info:git:*' formats $'\n(%b%m%u%c%F{240})%f'
+zstyle ':vcs_info:git:*' formats $'(%b%m%u%c%F{240})%f'
 
 # -------------------------------------------------------------------------------
 # Vim Mode
