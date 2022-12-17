@@ -19,7 +19,6 @@ setopt share_history
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-
 export DOCKER_BUILDKIT=1
 
 # -------------------------------------------------------------------------------
@@ -32,15 +31,17 @@ alias rmtar="rm -rf *.tar.gz"
 alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"
-alias ll="ls -al --group-directories-first"
-alias ls="ls --color=tty --group-directories-first"
-alias l="ls"
-alias c="clear"
 alias grep="grep --color=auto --exclude-dir={.git}"
+alias g="grep"
 alias shutdown="shutdown -h now"
 alias cx="chmod +x *.sh"
 
 # Navigation
+alias ll="ls -al --group-directories-first"
+alias ls="ls --color=tty --group-directories-first"
+alias l="ls"
+alias c="clear"
+
 alias t1="tree --dirsfirst -C -L 1 ."
 alias t2="tree --dirsfirst -C -L 2 ."
 alias t3="tree --dirsfirst -C -L 3 ."
@@ -56,7 +57,6 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 # Update path variable
 # -------------------------------------------------------------------------------
 
-# User env vars
 path+="$HOME/.local/bin"
 path+="$HOME/.cargo/bin"
 path+="$HOME/go/bin"
