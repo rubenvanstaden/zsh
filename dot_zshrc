@@ -59,7 +59,6 @@ alias da="nvim $HOME/.config/alacritty/alacritty.yml"
 # User env vars
 path+="$HOME/.local/bin"
 path+="$HOME/.cargo/bin"
-path+="$HOME/.lua/bin"
 path+="$HOME/go/bin"
 
 # -------------------------------------------------------------------------------
@@ -102,7 +101,7 @@ prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %F{cyan}>%f '
 zstyle ':vcs_info:*' check-for-changes true
 
 # Set custom strings for an unstaged changes (*)
-zstyle ':vcs_info:*' unstagedstr ' %F{red}*%f'
+zstyle ':vcs_info:*' unstagedstr ' %F{red}!%f'
 
 # Set custom strings for staged changes (+)
 zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
@@ -114,6 +113,7 @@ zstyle ':vcs_info:git:*' formats $'(%b%m%u%c%F{240})%f'
 # Vim Mode
 # -------------------------------------------------------------------------------
 
+# Use vi mode
 bindkey -v
 
 # Make switch between vim modes faster
@@ -129,25 +129,20 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 # A visual indicator to show the current mode
-function cursor_mode() {
+cursor_block='\e[2 q'
+cursor_beam='\e[6 q'
 
-    cursor_block='\e[2 q'
-    cursor_beam='\e[6 q'
-
-    function zle-keymap-select {
-        if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-            echo -ne $cursor_beam
-        fi
-    }
-
-    zle-line-init() {
+function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]]; then
+        echo -ne $cursor_block
+    else
         echo -ne $cursor_beam
-    }
-
-    zle -N zle-keymap-select
-    zle -N zle-line-init
+    fi
 }
 
-cursor_mode
+function zle-line-init {
+    echo -ne $cursor_beam
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
