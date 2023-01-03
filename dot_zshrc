@@ -13,13 +13,25 @@ setopt auto_cd
 setopt inc_append_history
 setopt share_history
 
+export HISTFILE="$HOME/.zhistory" # History filepath
+export HISTSIZE=10000              # Maximum events for internal history
+export SAVEHIST=10000              # Maximum events in history file
+
 # -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
 
+# locally installed packages
 path+="$HOME/.local/bin"
+
+# rust packages
 path+="$HOME/.cargo/bin"
+
+# gopls
 path+="$HOME/go/bin"
+
+# go
+path+="/usr/local/go/bin"
 
 # -------------------------------------------------------------------------------
 # Environment 
@@ -27,6 +39,8 @@ path+="$HOME/go/bin"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
+# export GOPATH=$HOME/go
+# export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
 export DOCKER_BUILDKIT=1
 
 # -------------------------------------------------------------------------------
