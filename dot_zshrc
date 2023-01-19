@@ -13,25 +13,14 @@ setopt auto_cd
 setopt inc_append_history
 setopt share_history
 
-export HISTFILE="$HOME/.zhistory" # History filepath
-export HISTSIZE=10000              # Maximum events for internal history
-export SAVEHIST=10000              # Maximum events in history file
-
 # -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
 
-# locally installed packages
 path+="$HOME/.local/bin"
-
-# rust packages
 path+="$HOME/.cargo/bin"
-
-# gopls
 path+="$HOME/go/bin"
-
-# go
-path+="/usr/local/go/bin"
+path+="usr/local/go"
 
 # -------------------------------------------------------------------------------
 # Environment 
@@ -39,8 +28,6 @@ path+="/usr/local/go/bin"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-# export GOPATH=$HOME/go
-# export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
 export DOCKER_BUILDKIT=1
 
 # -------------------------------------------------------------------------------
@@ -60,7 +47,7 @@ alias cx="chmod +x *.sh"
 
 # Navigation
 alias ll="ls -al --group-directories-first"
-alias ls="ls --color=tty --group-directories-first"
+alias ls="ls --color=tty"
 alias l="ls"
 alias c="clear"
 
@@ -117,7 +104,7 @@ zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
 # Set the format of the git information for vcs_info
 zstyle ':vcs_info:git:*' formats $'(%b%m%u%c%F{240})%f'
 
-prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %B%F{cyan}>%f%b '
+prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %F{cyan}>%f '
 
 # # Config for prompt. PS1 synonym.
 # prompt=$'%B%F{240}${vcs_info_msg_0_}%f%b\n'
