@@ -14,10 +14,18 @@ setopt inc_append_history
 setopt share_history
 
 # -------------------------------------------------------------------------------
+# Load env variables
+# -------------------------------------------------------------------------------
+
+export JOURNAL="$HOME/journal"
+export SCRIPT="$HOME/.local/bin"
+export ZLIB="$HOME/zettelkasten/zlib"
+
+# -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
 
-path+="$HOME/.local/bin"
+path+="$SCRIPT"
 path+="$HOME/.cargo/bin"
 path+="$HOME/go/bin"
 path+="usr/local/go"
@@ -34,19 +42,18 @@ export DOCKER_BUILDKIT=1
 # Aliases 
 # -------------------------------------------------------------------------------
 
+alias today='date +"%A, %B %-d, %Y"'
 alias hload="fc -R $HOME/.zsh_history"
 alias rload="source $HOME/.zshrc"
 alias rmtar="rm -rf *.tar.gz"
-alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"
 alias grep="grep --color=auto --exclude-dir={.git}"
-alias g="grep"
 alias shutdown="shutdown -h now"
 alias cx="chmod +x *.sh"
 
 # Navigation
-alias ll="ls -al --group-directories-first"
+alias ll="ls -al --color=auto"
 alias ls="ls --color=tty"
 alias l="ls"
 alias c="clear"
@@ -55,12 +62,14 @@ alias t1="tree --dirsfirst -C -L 1 ."
 alias t2="tree --dirsfirst -C -L 2 ."
 alias t3="tree --dirsfirst -C -L 3 ."
 alias t4="tree --dirsfirst -C -L 4 ."
+alias t=t1
+alias tt=t2
 
 # Configuration
 alias dz="nvim $HOME/.zshrc"
 alias di="nvim $HOME/.config/i3/config"
-alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
+alias dn="cd $HOME/.config/nvim && nvim"
 
 # -------------------------------------------------------------------------------
 # Plugins
@@ -147,3 +156,9 @@ function zle-line-init {
 
 zle -N zle-keymap-select
 zle -N zle-line-init
+
+# -------------------------------------------------------------------------------
+# fzf
+# -------------------------------------------------------------------------------
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
