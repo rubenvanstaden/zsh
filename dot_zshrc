@@ -13,25 +13,22 @@ setopt auto_cd
 setopt inc_append_history
 setopt share_history
 
-export HISTFILE="$HOME/.zhistory" # History filepath
-export HISTSIZE=10000              # Maximum events for internal history
-export SAVEHIST=10000              # Maximum events in history file
+# -------------------------------------------------------------------------------
+# Load env variables
+# -------------------------------------------------------------------------------
+
+export JOURNAL="$HOME/journal"
+export SCRIPT="$HOME/.local/bin"
+export ZLIB="$HOME/zettelkasten/zlib"
 
 # -------------------------------------------------------------------------------
 # Update path variable
 # -------------------------------------------------------------------------------
 
-# locally installed packages
-path+="$HOME/.local/bin"
-
-# rust packages
+path+="$SCRIPT"
 path+="$HOME/.cargo/bin"
-
-# gopls
 path+="$HOME/go/bin"
-
-# go
-path+="/usr/local/go/bin"
+path+="usr/local/go"
 
 # -------------------------------------------------------------------------------
 # Environment 
@@ -39,28 +36,25 @@ path+="/usr/local/go/bin"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
-# export GOPATH=$HOME/go
-# export GOPATH=$HOME/go:$HOME/github.com/rubenvanstaden/go
 export DOCKER_BUILDKIT=1
 
 # -------------------------------------------------------------------------------
 # Aliases 
 # -------------------------------------------------------------------------------
 
+alias today='date +"%A, %B %-d, %Y"'
 alias hload="fc -R $HOME/.zsh_history"
 alias rload="source $HOME/.zshrc"
 alias rmtar="rm -rf *.tar.gz"
-alias nv="nvim"
 alias rm="rm -rf"
 alias mkdir="mkdir -p"
 alias grep="grep --color=auto --exclude-dir={.git}"
-alias g="grep"
 alias shutdown="shutdown -h now"
 alias cx="chmod +x *.sh"
 
 # Navigation
-alias ll="ls -al --group-directories-first"
-alias ls="ls --color=tty --group-directories-first"
+alias ll="ls -al --color=auto"
+alias ls="ls --color=tty"
 alias l="ls"
 alias c="clear"
 
@@ -68,12 +62,14 @@ alias t1="tree --dirsfirst -C -L 1 ."
 alias t2="tree --dirsfirst -C -L 2 ."
 alias t3="tree --dirsfirst -C -L 3 ."
 alias t4="tree --dirsfirst -C -L 4 ."
+alias t=t1
+alias tt=t2
 
 # Configuration
 alias dz="nvim $HOME/.zshrc"
 alias di="nvim $HOME/.config/i3/config"
-alias dn="cd $HOME/.config/nvim && nvim"
 alias da="nvim $HOME/.config/alacritty/alacritty.yml"
+alias dn="cd $HOME/.config/nvim && nvim"
 
 # -------------------------------------------------------------------------------
 # Plugins
@@ -117,7 +113,7 @@ zstyle ':vcs_info:*' stagedstr ' %F{green}+%f'
 # Set the format of the git information for vcs_info
 zstyle ':vcs_info:git:*' formats $'(%b%m%u%c%F{240})%f'
 
-prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %B%F{cyan}>%f%b '
+prompt=$'\n%F{white}%2~%f %B%F{240}${vcs_info_msg_0_}%f%b %F{cyan}>%f '
 
 # # Config for prompt. PS1 synonym.
 # prompt=$'%B%F{240}${vcs_info_msg_0_}%f%b\n'
@@ -160,3 +156,14 @@ function zle-line-init {
 
 zle -N zle-keymap-select
 zle -N zle-line-init
+
+# -------------------------------------------------------------------------------
+# fzf
+# -------------------------------------------------------------------------------
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fh - repeat history
+fh() {
+  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
